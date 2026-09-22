@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://Open-Sourcery-UMD.github.io/random-dungeon-gen",
+  "homepage": "https://open-sourcery-umd.github.io/random-dungeon-gen",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
