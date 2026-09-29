@@ -17,5 +17,8 @@
     "lib": "@/lib",
     "hooks": "@/hooks"
   },
+  "registries": {
+    "@firebase": "https://firebaseopensource.com/r/{name}.json"
+  },
   "iconLibrary": "lucide"
 }

@@ -1,5 +1,8 @@
 import { initializeApp } from 'firebase/app';
 import { getAnalytics } from "firebase/analytics";
+import { initializeUI } from '@firebase-oss/ui-core';
+import { FirebaseUIProvider } from '@firebase-oss/ui-react';
+import { SignUpAuthScreen } from "./components/sign-up-auth-screen";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -19,12 +22,22 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
+const ui = initializeUI({
+  app,
+});
+
+export function AppProviders({ children }) {
+  return <FirebaseUIProvider ui={ui}>{children}</FirebaseUIProvider>;
+}
+
 function App() {
   return (
     <>
-      HI!
+      <AppProviders>
+        <SignUpAuthScreen />
+      </AppProviders>
     </>
   )
 }
 
-export default App
+export default App;

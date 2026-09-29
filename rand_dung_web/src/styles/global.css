@@ -123,3 +123,24 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  button[data-provider='google.com'][data-themed='true'] {
+    --google-primary: #131314;
+    --primary: var(--google-primary);
+    --primary-foreground: var(--color-white);
+  }
+  button[data-provider='google.com'][data-themed='neutral'] {
+    --google-primary: #F2F2F2;
+    --primary: var(--google-primary);
+    --primary-foreground: var(--color-black);
+  }
+}
+
+@variant dark {
+  button[data-provider='google.com'][data-themed='true'] {
+    --google-primary: #FFFFFF;
+    --primary: var(--google-primary);
+    --primary-foreground: var(--color-black);
+  }
+}
