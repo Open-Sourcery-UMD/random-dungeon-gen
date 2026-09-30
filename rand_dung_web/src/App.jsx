@@ -19,6 +19,7 @@ import {
   NavigationMenuContent,
 } from "@/components/ui/navigation-menu";
 import { RequireVerifiedUser } from "@/components/require-verified-user";
+import { getFirestore } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -38,6 +39,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 export const auth = getAuth(app);
+export const db = getFirestore(app);
 
 const ui = initializeUI({
   app,
@@ -92,7 +94,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/dashboard" element={
               <RequireVerifiedUser user={user} authLoading={authLoading}>
-                <Dashboard />
+                <Dashboard user={user} />
               </RequireVerifiedUser>
             } />
             <Route path="/verify-email" element={<VerifyEmail user={user} authLoading={authLoading} onVerified={() => setEmailVerified(true)} />} />
