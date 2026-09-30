@@ -2,7 +2,12 @@ import { initializeApp } from 'firebase/app';
 import { getAnalytics } from "firebase/analytics";
 import { initializeUI } from '@firebase-oss/ui-core';
 import { FirebaseUIProvider } from '@firebase-oss/ui-react';
-import { SignUpAuthScreen } from "./components/sign-up-auth-screen";
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { Home } from "@/pages/home";
+import { Login } from "@/pages/login";
+import { SignUp } from "@/pages/signup";
+import { Dashboard } from "@/pages/dashboard";
+import { VerifyEmail } from "@/pages/verify_email";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -32,11 +37,34 @@ export function AppProviders({ children }) {
 
 function App() {
   return (
-    <>
-      <AppProviders>
-        <SignUpAuthScreen />
-      </AppProviders>
-    </>
+    <AppProviders>
+        <Router basename={import.meta.env.BASE_URL}>
+          <header className="w-full bg-slate-900 text-white">
+            <nav className="mx-auto flex items-center justify-between py-4 px-6">
+              <Link to="/" className="text-xl font-bold tracking-tight">
+                Random Dungeon Gen
+              </Link>
+
+              <div className="flex items-center gap-3">
+                <Link to="/login" className="rounded-md px-3 py-2 text-sm hover:bg-white/10">
+                  Log in
+                </Link>
+                <Link to="/signup" className="rounded-md px-3 py-2 text-sm hover:bg-white/10">
+                  Sign up
+                </Link>
+              </div>
+            </nav>
+          </header>
+
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/verify-email" element={<VerifyEmail />} />
+          </Routes>
+        </Router> 
+    </AppProviders>
   )
 }
 
