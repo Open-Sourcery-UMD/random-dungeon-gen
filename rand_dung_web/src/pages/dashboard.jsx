@@ -11,7 +11,7 @@ export function Dashboard() {
     useEffect(() => {
         const fetchProjects = async () => {
             if(auth.currentUser == null) return;
-            const querySnapshot = await getDocs(collection(db, "users/" + auth.currentUser.uid + "/projects"));
+            const querySnapshot = await getDocs(collection(db, "users/yTDClbhPOzBJl529oXLQ/projects"));
             setProjects(querySnapshot);
         }
         fetchProjects();
@@ -38,7 +38,7 @@ export function Dashboard() {
         return (
             <div className="w-full flex justify-center flex-wrap gap-10 p-10">
                 {projects.docs.map((project) => (
-                    <Project key={project.id} name={project.data().name} description={project.data().description} />
+                    <Project key={project.id} name={project.data().title} description={project.data().description} />
                 ))}
             </div>
         );
