@@ -7,7 +7,7 @@ import { Home } from "@/pages/home";
 import { Login } from "@/pages/login";
 import { SignUp } from "@/pages/signup";
 import { Dashboard } from "@/pages/dashboard";
-import { VerifyEmail } from "@/pages/verify_email";
+import { VerifyEmail } from "@/pages/verify-email";
 import { useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { VerifiedMenuItems, UnverifiedMenuItems, VerifyEmailItems } from "@/components/menu-items";
@@ -18,6 +18,7 @@ import {
   NavigationMenuTrigger,
   NavigationMenuContent,
 } from "@/components/ui/navigation-menu";
+import { RequireVerifiedUser } from "@/components/require-verified-user";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -36,7 +37,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-const auth = getAuth(app);
+export const auth = getAuth(app);
 
 const ui = initializeUI({
   app,
@@ -48,11 +49,13 @@ export function AppProviders({ children }) {
 
 function App() {
   const [user, setUser] = useState(null);
+  const [emailVerified, setEmailVerified] = useState(false);
   const [authLoading, setAuthLoading] = useState(true);
 
   useEffect(() => {
     return onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
+      setEmailVerified(!!currentUser?.emailVerified);
       setAuthLoading(false);
     });
   }, []);
@@ -73,7 +76,7 @@ function App() {
                       <NavigationMenuTrigger>Account</NavigationMenuTrigger>
                       <NavigationMenuContent>
                         <div className="flex min-w-36 flex-col gap-1 p-2">
-                          {user?.emailVerified ? <VerifiedMenuItems /> : user ? <VerifyEmailItems /> : <UnverifiedMenuItems />}
+                          {emailVerified ? <VerifiedMenuItems /> : user ? <VerifyEmailItems /> : <UnverifiedMenuItems />}
                         </div>
                       </NavigationMenuContent>
                     </NavigationMenuItem>
@@ -87,8 +90,12 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/verify-email" element={<VerifyEmail />} />
+            <Route path="/dashboard" element={
+              <RequireVerifiedUser user={user} authLoading={authLoading}>
+                <Dashboard />
+              </RequireVerifiedUser>
+            } />
+            <Route path="/verify-email" element={<VerifyEmail user={user} authLoading={authLoading} onVerified={() => setEmailVerified(true)} />} />
           </Routes>
         </Router> 
     </AppProviders>

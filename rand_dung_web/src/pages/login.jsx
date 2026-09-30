@@ -17,14 +17,14 @@ export function Login() {
     }
 
     return (
-        <div class="w-full flex flex-col items-center justify-center gap-10 pt-10">
-            <div class="w-100">
+        <div className="w-full flex flex-col items-center justify-center gap-10 pt-10">
+            <div className="w-100">
                 <SignInAuthForm onSignIn={handleSignIn} />
             </div>
 
             <h4>or</h4>
 
-            <div class="w-100">
+            <div className="w-100">
                 <GoogleSignInButton onSignIn={handleSignIn} />
             </div>
         </div>
