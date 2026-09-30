@@ -8,6 +8,14 @@ export function VerifiedMenuItems() {
     );
 }
 
+export function VerifyEmailItems() {
+    return (
+        <Link className="block rounded px-3 py-2 hover:bg-slate-100" to="/verify-email">
+            Verify Email
+        </Link>
+    );
+}
+
 export function UnverifiedMenuItems() {
     return (
         <>

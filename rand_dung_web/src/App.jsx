@@ -10,7 +10,7 @@ import { Dashboard } from "@/pages/dashboard";
 import { VerifyEmail } from "@/pages/verify_email";
 import { useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { VerifiedMenuItems, UnverifiedMenuItems } from "@/components/menu-items";
+import { VerifiedMenuItems, UnverifiedMenuItems, VerifyEmailItems } from "@/components/menu-items";
 import {
   NavigationMenu,
   NavigationMenuList,
@@ -73,7 +73,7 @@ function App() {
                       <NavigationMenuTrigger>Account</NavigationMenuTrigger>
                       <NavigationMenuContent>
                         <div className="flex min-w-36 flex-col gap-1 p-2">
-                          {user?.emailVerified ? <VerifiedMenuItems /> : <UnverifiedMenuItems />}
+                          {user?.emailVerified ? <VerifiedMenuItems /> : user ? <VerifyEmailItems /> : <UnverifiedMenuItems />}
                         </div>
                       </NavigationMenuContent>
                     </NavigationMenuItem>
