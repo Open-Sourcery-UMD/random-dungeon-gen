@@ -2,13 +2,19 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { sendEmailVerification } from "firebase/auth";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import Countdown from 'react-countdown';
+import { useState } from "react";
+
+const COOLDOWN = 30 * 1000;
 
 export function VerifyEmail({ user, authLoading, onVerified }) {
+    const [countdownDate, setCountdownDate] = useState(Date.now() + COOLDOWN);
     const navigate = useNavigate();
 
     async function verifyEmail() {
         try {
             await sendEmailVerification(user);
+            setCountdownDate(Date.now() + COOLDOWN);
             alert("Verification email sent. Please check your inbox.");
         } catch {
             alert("Could not send the verification email. Please try again.");
@@ -43,7 +49,18 @@ export function VerifyEmail({ user, authLoading, onVerified }) {
                         </CardDescription>
                     </CardHeader>
 
-                    <Button onClick={verifyEmail}>Resend Verification Email</Button>
+                    <Countdown date={countdownDate} key={countdownDate} id="verify-email-countdown" renderer={({ seconds, completed }) => (
+                        (completed) ?
+                            (
+                                <Button onClick={verifyEmail} disabled={false}>Resend Verification Email</Button>
+                            ) : (
+                                <>
+                                    <Button onClick={verifyEmail} disabled={true}>Resend Verification Email</Button>
+                                    <p className="text-center text-sm text-gray-500">You can resend the verification email in {seconds} seconds.</p>
+                                </>
+                            )
+                        )} />
+
                     <Button onClick={checkVerified}>Click once Verified</Button>
                 </Card>
             </div>

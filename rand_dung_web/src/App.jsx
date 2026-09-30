@@ -66,7 +66,7 @@ function App() {
           <header className="w-full bg-slate-900 text-white">
             <nav className="mx-auto flex items-center justify-between py-4 px-6">
               <Link to="/" className="text-xl font-bold tracking-tight">
-                Random Dungeon Gen
+                Random Worlds
               </Link>
 
               <div className="flex items-center gap-3">
