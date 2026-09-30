@@ -8,6 +8,16 @@ import { Login } from "@/pages/login";
 import { SignUp } from "@/pages/signup";
 import { Dashboard } from "@/pages/dashboard";
 import { VerifyEmail } from "@/pages/verify_email";
+import { useEffect, useState } from "react";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { VerifiedMenuItems, UnverifiedMenuItems } from "@/components/menu-items";
+import {
+  NavigationMenu,
+  NavigationMenuList,
+  NavigationMenuItem,
+  NavigationMenuTrigger,
+  NavigationMenuContent,
+} from "@/components/ui/navigation-menu";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -26,6 +36,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
+const auth = getAuth(app);
 
 const ui = initializeUI({
   app,
@@ -36,6 +47,16 @@ export function AppProviders({ children }) {
 }
 
 function App() {
+  const [user, setUser] = useState(null);
+  const [authLoading, setAuthLoading] = useState(true);
+
+  useEffect(() => {
+    return onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      setAuthLoading(false);
+    });
+  }, []);
+
   return (
     <AppProviders>
         <Router basename={import.meta.env.BASE_URL}>
@@ -46,12 +67,18 @@ function App() {
               </Link>
 
               <div className="flex items-center gap-3">
-                <Link to="/login" className="rounded-md px-3 py-2 text-sm hover:bg-white/10">
-                  Log in
-                </Link>
-                <Link to="/signup" className="rounded-md px-3 py-2 text-sm hover:bg-white/10">
-                  Sign up
-                </Link>
+                <NavigationMenu>
+                  <NavigationMenuList>
+                    <NavigationMenuItem>
+                      <NavigationMenuTrigger>Account</NavigationMenuTrigger>
+                      <NavigationMenuContent>
+                        <div className="flex min-w-36 flex-col gap-1 p-2">
+                          {user?.emailVerified ? <VerifiedMenuItems /> : <UnverifiedMenuItems />}
+                        </div>
+                      </NavigationMenuContent>
+                    </NavigationMenuItem>
+                  </NavigationMenuList>
+                </NavigationMenu>
               </div>
             </nav>
           </header>
