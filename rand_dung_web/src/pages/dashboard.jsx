@@ -4,9 +4,11 @@ import { doc, setDoc, updateDoc, getDocs, collection } from "firebase/firestore"
 import { useState, useEffect } from "react";
 import { db, auth } from "@/App.jsx";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 export function Dashboard() {
     const [projects, setProjects] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchProjects = async () => {
@@ -30,7 +32,9 @@ export function Dashboard() {
                         </CardDescription>
 
                         <div className="h-20 flex flex-col items-center justify-end gap-5 mt-5">
-                            <Button className="w-3/4">Create First Project</Button>
+                            <Button className="w-3/4" onClick={() => navigate("/create-project")}>
+                                Create First Project
+                            </Button>
                         </div>
                     </CardHeader>
                 </Card>

@@ -9,6 +9,7 @@ import { SignUp } from "@/pages/signup";
 import { Dashboard } from "@/pages/dashboard";
 import { VerifyEmail } from "@/pages/verify-email";
 import { Settings } from "@/pages/settings";
+import { CreateProject } from "@/pages/create-project";
 import { useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { VerifiedMenuItems, UnverifiedMenuItems, VerifyEmailItems } from "@/components/menu-items";
@@ -102,6 +103,11 @@ function App() {
             <Route path="/verify-email" element={<VerifyEmail user={user} authLoading={authLoading} onVerified={() => setEmailVerified(true)} />} />
             <Route path="/settings" element={
               (user ? <Settings /> : <Navigate to="/login" replace />)
+            } />
+            <Route path="/create-project" element={
+              <RequireVerifiedUser user={user} authLoading={authLoading} >
+                <CreateProject />
+              </RequireVerifiedUser>
             } />
           </Routes>
         </Router> 
