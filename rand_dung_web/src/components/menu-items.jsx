@@ -1,10 +1,23 @@
 import { Link } from 'react-router-dom';
+import { auth } from "@/App.jsx";
+import { signOut } from "firebase/auth";
+
+function Logout() {
+    return (
+        <Link className="block rounded px-3 py-2 hover:bg-slate-100" to="/login" onClick={() => signOut(auth)}>
+            Logout
+        </Link>
+    )
+}
 
 export function VerifiedMenuItems() {
     return (
-        <Link className="block rounded px-3 py-2 hover:bg-slate-100" to="/dashboard">
-            Dashboard
-        </Link>
+        <>
+            <Link className="block rounded px-3 py-2 hover:bg-slate-100" to="/dashboard">
+                Dashboard
+            </Link>
+            <Logout />
+        </>
     );
 }
 
