@@ -1,6 +1,6 @@
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Project } from "@/components/project";
-import { doc, setDoc, updateDoc, getDocs, collection } from "firebase/firestore"; 
+import { getDocs, collection } from "firebase/firestore"; 
 import { useState, useEffect } from "react";
 import { db, auth } from "@/App.jsx";
 import { Button } from "@/components/ui/button";
@@ -65,6 +65,12 @@ export function Dashboard() {
                 <CardHeader>
                     <CardTitle>Projects</CardTitle>
                 </CardHeader>
+
+                <div className="w-full flex flex-col items-start justify-center gap-5 mt-5">
+                    <Button className="w-50" onClick={() => navigate("/create-project")}>
+                        Create New Project
+                    </Button>
+                </div>
 
                 {getProjects()}
             </Card>
