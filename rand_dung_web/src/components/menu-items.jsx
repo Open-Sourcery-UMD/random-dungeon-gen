@@ -10,12 +10,21 @@ function Logout() {
     )
 }
 
+function Settings() {
+    return (
+        <Link className="block rounded px-3 py-2 hover:bg-slate-100" to="/settings">
+            Settings
+        </Link>
+    )
+}
+
 export function VerifiedMenuItems() {
     return (
         <>
             <Link className="block rounded px-3 py-2 hover:bg-slate-100" to="/dashboard">
                 Dashboard
             </Link>
+            <Settings />
             <Logout />
         </>
     );
@@ -23,9 +32,13 @@ export function VerifiedMenuItems() {
 
 export function VerifyEmailItems() {
     return (
-        <Link className="block rounded px-3 py-2 hover:bg-slate-100" to="/verify-email">
-            Verify Email
-        </Link>
+        <>
+            <Link className="block rounded px-3 py-2 hover:bg-slate-100" to="/verify-email">
+                Verify Email
+            </Link>
+            <Settings />
+            <Logout />
+        </>
     );
 }
 

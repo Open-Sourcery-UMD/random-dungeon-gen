@@ -8,6 +8,7 @@ import { Login } from "@/pages/login";
 import { SignUp } from "@/pages/signup";
 import { Dashboard } from "@/pages/dashboard";
 import { VerifyEmail } from "@/pages/verify-email";
+import { Settings } from "@/pages/settings";
 import { useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { VerifiedMenuItems, UnverifiedMenuItems, VerifyEmailItems } from "@/components/menu-items";
@@ -20,6 +21,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import { RequireVerifiedUser } from "@/components/require-verified-user";
 import { getFirestore } from "firebase/firestore";
+import { Navigate } from "react-router-dom";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -98,6 +100,9 @@ function App() {
               </RequireVerifiedUser>
             } />
             <Route path="/verify-email" element={<VerifyEmail user={user} authLoading={authLoading} onVerified={() => setEmailVerified(true)} />} />
+            <Route path="/settings" element={
+              (user ? <Settings /> : <Navigate to="/login" replace />)
+            } />
           </Routes>
         </Router> 
     </AppProviders>
