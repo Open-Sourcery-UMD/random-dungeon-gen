@@ -11,14 +11,16 @@ export function Dashboard() {
     useEffect(() => {
         const fetchProjects = async () => {
             if(auth.currentUser == null) return;
-            const querySnapshot = await getDocs(collection(db, "users/yTDClbhPOzBJl529oXLQ/projects"));
+            const uid = auth.currentUser.uid;
+            const querySnapshot = await getDocs(collection(db, `users/${uid}/projects`));
             setProjects(querySnapshot);
         }
         fetchProjects();
     }, []);
     
     function getProjects() {
-        if(!projects) return (
+        console.log(projects);
+        if(projects == null || projects.docs.length == 0) return (
             <div className="w-full flex justify-center items-center gap-10 p-10">
                 <Card className="w-100 p-5">
                     <CardHeader>

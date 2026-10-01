@@ -95,8 +95,8 @@ function App() {
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
             <Route path="/dashboard" element={
-              <RequireVerifiedUser user={user} authLoading={authLoading}>
-                <Dashboard user={user} />
+              <RequireVerifiedUser user={user} authLoading={authLoading} >
+                <Dashboard />
               </RequireVerifiedUser>
             } />
             <Route path="/verify-email" element={<VerifyEmail user={user} authLoading={authLoading} onVerified={() => setEmailVerified(true)} />} />
