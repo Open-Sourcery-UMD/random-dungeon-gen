@@ -63,14 +63,14 @@ export function Dashboard() {
 
             <Card className="w-full p-5">
                 <CardHeader>
-                    <CardTitle>Projects</CardTitle>
-                </CardHeader>
+                    <div className="w-full flex flex-row items-end justify-between gap-5">
+                        <CardTitle>Projects</CardTitle>
 
-                <div className="w-full flex flex-col items-start justify-center gap-5 mt-5">
-                    <Button className="w-50" onClick={() => navigate("/create-project")}>
-                        Create New Project
-                    </Button>
-                </div>
+                        <Button className="w-50" onClick={() => navigate("/create-project")}>
+                            Create New Project
+                        </Button>
+                    </div>
+                </CardHeader>
 
                 {getProjects()}
             </Card>

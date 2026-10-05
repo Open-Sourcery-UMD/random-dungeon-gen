@@ -49,25 +49,35 @@ export function CreateProject() {
         
 
     return (
-        <div className="w-full flex flex-col justify-center gap-10 p-10">
-            <Card>
-                <CardHeader>
-                    <CardTitle>Create New Project</CardTitle>
-                    <CardDescription>
-                        Enter in the various details for your new project. You can always change them later.
-                    </CardDescription>
+        <div className="w-full flex flex-col justify-center items-center gap-10 p-10">
+            <div className="w-100">
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Create New Project</CardTitle>
+                        <CardDescription>
+                            Enter in the various details for your new project. You can always change them later.
+                        </CardDescription>
 
 
-                    <div className="flex items-center justify-center gap-5 mt-5 w-full">
-                        <div className="flex flex-col items-center justify-end gap-5 mt-5 w-100">
-                            <Input placeholder="Project Name" value={projectName} onChange={(e) => setProjectName(e.target.value)}></Input>
-                            <Input placeholder="Project Description" value={projectDescription} onChange={(e) => setProjectDescription(e.target.value)}></Input>
+                        <div className="flex items-center justify-center gap-5 mt-5 w-full pb-5">
+                            <div className="flex flex-col items-center justify-end gap-5 mt-5 w-75">
+                                <h3>Project Title:</h3>
+                                <Input placeholder="Project Name" value={projectName} onChange={(e) => setProjectName(e.target.value)}></Input>
+                                
+                                <br/>
 
-                            <Button className="w-full" onClick={() => createNewProject()} disabled={projectStatus === "creating"}>Create Project</Button>
+                                <h3>Project Description:</h3>
+                                <Input placeholder="Project Description" value={projectDescription} onChange={(e) => setProjectDescription(e.target.value)}></Input>
+
+                                <br/>
+
+                                <Button className="w-full" onClick={() => createNewProject()} disabled={projectStatus === "creating"}>Create Project</Button>
+                                <Button className="w-full" onClick={() => navigate("/dashboard")} disabled={projectStatus === "creating"}>Cancel</Button>
+                            </div>
                         </div>
-                    </div>
-                </CardHeader>
-            </Card>
+                    </CardHeader>
+                </Card>
+            </div>
         </div>
     )
 }
