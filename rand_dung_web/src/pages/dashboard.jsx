@@ -1,6 +1,6 @@
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Project } from "@/components/project";
-import { getDocs, collection } from "firebase/firestore"; 
+import { getDocs, collection, doc, deleteDoc } from "firebase/firestore"; 
 import { useState, useEffect } from "react";
 import { db, auth } from "@/App.jsx";
 import { Button } from "@/components/ui/button";
@@ -17,11 +17,18 @@ export function Dashboard() {
             const querySnapshot = await getDocs(collection(db, `users/${uid}/projects`));
             setProjects(querySnapshot);
         }
+
         fetchProjects();
     }, []);
-    
+
+    async function deleteProject(projectId) {
+        const uid = auth.currentUser.uid;
+
+        await deleteDoc(doc(db, `users/${uid}/projects/${projectId}`));
+        setProjects(null);
+    }
+
     function getProjects() {
-        console.log(projects);
         if(projects == null || projects.docs.length == 0) return (
             <div className="w-full flex justify-center items-center gap-10 p-10">
                 <Card className="w-100 p-5">
@@ -44,7 +51,8 @@ export function Dashboard() {
         return (
             <div className="w-full flex justify-center flex-wrap gap-10 p-10">
                 {projects.docs.map((project) => (
-                    <Project key={project.id} name={project.data().title} description={project.data().description} />
+                    <Project key={project.id} name={project.data().title} 
+                    description={project.data().description} onDelete={async () => await deleteProject(project.id)}/>
                 ))}
             </div>
         );
