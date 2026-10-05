@@ -10,14 +10,14 @@ export function Dashboard() {
     const [projects, setProjects] = useState(null);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const fetchProjects = async () => {
-            if(auth.currentUser == null) return;
-            const uid = auth.currentUser.uid;
-            const querySnapshot = await getDocs(collection(db, `users/${uid}/projects`));
-            setProjects(querySnapshot);
-        }
+    const fetchProjects = async () => {
+        if(auth.currentUser == null) return;
+        const uid = auth.currentUser.uid;
+        const querySnapshot = await getDocs(collection(db, `users/${uid}/projects`));
+        setProjects(querySnapshot);
+    }
 
+    useEffect(() => {
         fetchProjects();
     }, []);
 
@@ -25,7 +25,8 @@ export function Dashboard() {
         const uid = auth.currentUser.uid;
 
         await deleteDoc(doc(db, `users/${uid}/projects/${projectId}`));
-        setProjects(null);
+        
+        fetchProjects();
     }
 
     function getProjects() {
